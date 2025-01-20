@@ -37,7 +37,7 @@ export interface FormItemProps {
     /**
      * 表单验证规则
      */
-    rules?: { 
+    rules?: {
         rule: ((value: any) => boolean) | RegExp
         message: string
     };
@@ -57,10 +57,10 @@ const FormItem: FunctionComponent<FormItemProps> = ({
     name,
     children,
     label,
-    height = 50,
+    height = 24,
     labelWidth,
     required = false,
-    rules = {rule: () => true, message: '' },
+    rules = { rule: () => true, message: '' },
     trigger = 'onChange',
     validateTrigger = 'onChange'
 }) => {
@@ -124,18 +124,22 @@ const FormItem: FunctionComponent<FormItemProps> = ({
         renderChildren = children
     }
 
-    return (<Label
-        height={height}
-        label={label}
-        labelWidth={labelWidth}
-        required={required}
-    >
-        {renderChildren}
-        <Message
-            name={name}
-            {...dispatch({ type: 'getFieldModel' }, name)}
-        />
-    </Label>);
+    return (
+        <>
+            <Label
+                height={height}
+                label={label}
+                labelWidth={labelWidth}
+                required={required}
+            >
+                {renderChildren}
+
+            </Label>
+            <Message
+                name={name}
+                {...dispatch({ type: 'getFieldModel' }, name)}
+            />
+        </>);
 }
 
 export default FormItem;

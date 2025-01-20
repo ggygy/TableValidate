@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react'
 import { type FormInstance } from "./utils/FormStore";
 import Form, { Input, FormItem, Select, Option } from './Form'
+import './App.css'
 
 function App() {
     const form = useRef<FormInstance>(null)
@@ -15,8 +16,9 @@ function App() {
     const handleGetValue = () => {
         console.log(form.current, 'form.current ')
     }
+
     return <div style={{ marginTop: '50px' }} >
-        <Form initialValues={{ author: '我不是外星人' }}
+        <Form initialValues={{ author: '初始化姓名' }}
             ref={form}
         >
             <FormItem
@@ -74,7 +76,7 @@ function App() {
                 <Input placeholder="输入简介" />
             </FormItem>
             <FormItem label="你最喜欢的前端框架"
-                labelWidth={150}
+                labelWidth={170}
                 name="likes"
                 required
             >
@@ -89,15 +91,14 @@ function App() {
                     <Option value={3} > Angular.js </Option>
                 </Select>
             </FormItem>
-            <button className="searchbtn"
-                onClick={handleClick}
-                type="button"
-            >提交</button>
-            <button className="concellbtn"
-                type="reset"
-            >重置</button>
+            <button className="searchbtn" onClick={handleClick} type="button">
+                提交
+            </button>
+            <button className="concellbtn" type="reset">
+                重置
+            </button>
         </Form>
-        <div style={{ marginTop: '20px' }} >
+        <div className='form-button' style={{ marginTop: '20px' }} >
             <span>验证表单功能</span>
             <button className="searchbtn" onClick={handleGetValue} style={{ background: 'green' }}>
                 获取表单数层
