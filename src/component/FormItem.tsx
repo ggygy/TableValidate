@@ -65,7 +65,6 @@ const FormItem: FunctionComponent<FormItemProps> = ({
     validateTrigger = 'onChange'
 }) => {
     const formInstance = useContext(FormContext)
-    const { rule, message } = rules
     const { registerValidateFields, dispatch, unRegisterValidate } = formInstance
     const [, forceUpdate] = useState({})
 
@@ -81,13 +80,13 @@ const FormItem: FunctionComponent<FormItemProps> = ({
 
     useEffect(() => {
         /* 注册表单项 */
-        registerValidateFields(name, onStoreChange, { value: '', rule, required, message })
+        registerValidateFields(name, onStoreChange, { ...rules, required })
         return () => {
             /* 卸载表单项 */
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             name && unRegisterValidate(name)
         }
-    }, [name, rules, required, registerValidateFields, onStoreChange, unRegisterValidate])
+    }, [name, required, registerValidateFields, onStoreChange, unRegisterValidate])
 
     /* 使表单控件变成可控制的 */
     const getControlled = (child: ReactElement) => {
@@ -97,13 +96,13 @@ const FormItem: FunctionComponent<FormItemProps> = ({
         const handleChange = (e: any) => {
             const value = e.target.value
             /* 设置表单的值 */
-            dispatch({ type: 'setFieldsValue' }, name, { value, rule, required, message })
+            dispatch({ type: 'setFieldsValue' }, name, { value })
         }
         mergeChildrenProps[trigger] = handleChange
         if (required || rules) {
             /* 验证表单单元项的值 */
             mergeChildrenProps[validateTrigger] = (e: any) => {
-                /* 当改变值和验证表单，用统一一个事件 */
+                /* 当改变值和验证表单，用统一一个事件(select组件需要) */
                 if (validateTrigger === trigger) {
                     handleChange(e)
                 }

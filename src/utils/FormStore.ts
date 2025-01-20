@@ -2,7 +2,7 @@
 import { unstable_batchedUpdates } from "react-dom"
 
 export type IValidate = {
-    value: string | number,
+    value?: string | number | null,
     rule: ((value: any) => boolean) | RegExp,
     required?: boolean,
     status?: string,
@@ -150,7 +150,7 @@ export default class FormStore {
     getFieldValue(name: string): string | number | null {
         const model = this.model[name]
         if (!model && this.defaultFormValue[name]) return this.defaultFormValue[name] /* 没有注册，但是存在默认值的情况 */
-        return model ? model.value : null
+        return model ? model.value ?? '' : null
     }
 
     /* 获取表单数据层的值 */
@@ -230,9 +230,7 @@ export default class FormStore {
         this.validateFields((status: boolean) => {
             const { onFinish, onFinishFailed } = this.callback
             if (cb) cb(status) /* 提交失败 */
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             if (!status) onFinishFailed && typeof onFinishFailed === 'function' && onFinishFailed() /* 验证失败 */
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             onFinish && typeof onFinish === 'function' && onFinish(this.getFieldsValue())     /* 验证成功 */
         })
     }

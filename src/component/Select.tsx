@@ -10,7 +10,7 @@ interface SelectProps {
 const Select: FunctionComponent<SelectProps> = ({ children, ...props }) => {
     return (
         <select {...props} className="form-input">
-            <option label={props?.placeholder} value={props?.defaultValue}>
+            <option label={props?.placeholder} value={props?.placeholder}>
                 {props.placeholder}
             </option>
             {children}

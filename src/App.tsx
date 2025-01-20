@@ -14,11 +14,12 @@ function App() {
         })
     }
     const handleGetValue = () => {
-        console.log(form.current, 'form.current ')
+        console.log(form.current?.getFieldsValue(), 'form.current ')
     }
 
     return <div style={{ marginTop: '50px' }} >
-        <Form initialValues={{ author: '初始化姓名' }}
+        <Form 
+            initialValues={{ author: '初始化姓名' }}
             ref={form}
         >
             <FormItem
@@ -80,7 +81,7 @@ function App() {
                 name="likes"
                 required
             >
-                <Select defaultValue={''}
+                <Select
                     placeholder="请选择"
                     width={120}
                 >
@@ -112,7 +113,7 @@ function App() {
                 className="searchbtn"
                 onClick={() => {
                     form.current?.setFieldsValue('des', {
-                        value: '',
+                        value: form.current.getFieldValue('des'),
                         rule: (value = '') => value.length < 10,
                         message: '简介不超过十个字符'
                     })
